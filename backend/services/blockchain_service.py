@@ -7,7 +7,7 @@ print("🔗 Initializing CloudCred Blockchain Service...")
 
 # LOCAL BLOCKCHAIN CONFIGURATION
 BLOCKCHAIN_PROVIDER = "http://127.0.0.1:8545"
-CHAIN_ID = 1337
+CHAIN_ID = 31337
 
 # Hardhat test account (Account #0 - has 10,000 ETH)
 PRIVATE_KEY = "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80"

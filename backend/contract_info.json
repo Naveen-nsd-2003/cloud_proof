@@ -1,6 +1,6 @@
 {
   "address": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
   "network": "localhost",
-  "chainId": 1337,
-  "deployedAt": "2025-10-03T06:47:10.114Z"
+  "chainId": 31337,
+  "deployedAt": "2025-10-09T00:53:47.037Z"
 }
