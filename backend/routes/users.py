@@ -40,7 +40,16 @@ def register():
         "password": hashed_pw,
         "role": role,
         "created_at": datetime.utcnow(),
-        "is_active": True
+        "is_active": True,
+        "average_rating": 0,  # NEW
+        "total_reviews": 0,   # NEW
+        "rating_breakdown": { # NEW
+            "5_star": 0,
+            "4_star": 0,
+            "3_star": 0,
+            "2_star": 0,
+            "1_star": 0
+        }
     })
 
     return jsonify({"message": "User registered successfully ✅"}), 201
@@ -63,9 +72,11 @@ def login():
     return jsonify({
         "token": token, 
         "user": {
-            "id": str(user["_id"]),      # THIS IS THE FIX
+            "id": str(user["_id"]),
             "name": user["name"], 
-            "role": user["role"]
+            "role": user["role"],
+            "average_rating": user.get("average_rating", 0),  # NEW
+            "total_reviews": user.get("total_reviews", 0)      # NEW
         }
     })
 
@@ -82,11 +93,23 @@ def list_users():
         if role and role in ["freelancer", "client"]:
             query["role"] = role
         
-        # Get users (exclude passwords)
+        # Get users (exclude passwords, include ratings)
         users = list(users_collection.find(
             query,
             {"password": 0}  # Exclude password field
         ).limit(limit))
+        
+        # Add default rating fields if missing
+        for user in users:
+            user.setdefault("average_rating", 0)
+            user.setdefault("total_reviews", 0)
+            user.setdefault("rating_breakdown", {
+                "5_star": 0,
+                "4_star": 0,
+                "3_star": 0,
+                "2_star": 0,
+                "1_star": 0
+            })
         
         return json.dumps({"users": users}, cls=CustomJSONEncoder)
         

@@ -53,6 +53,16 @@ def get_profile():
             "role": user.get("role", ""),
             "bio": user.get("bio", ""),
             "profileImage": user.get("profileImage", ""),
+            # ← ADD RATING FIELDS
+            "average_rating": user.get("average_rating", 0),
+            "total_reviews": user.get("total_reviews", 0),
+            "rating_breakdown": user.get("rating_breakdown", {
+                "5_star": 0,
+                "4_star": 0,
+                "3_star": 0,
+                "2_star": 0,
+                "1_star": 0
+            }),
             "created_at": user.get("created_at"),
             "updated_at": user.get("updated_at")
         }
@@ -109,6 +119,16 @@ def update_profile():
             "role": updated_user.get("role", ""),
             "bio": updated_user.get("bio", ""),
             "profileImage": updated_user.get("profileImage", ""),
+            # ← ADD RATING FIELDS
+            "average_rating": updated_user.get("average_rating", 0),
+            "total_reviews": updated_user.get("total_reviews", 0),
+            "rating_breakdown": updated_user.get("rating_breakdown", {
+                "5_star": 0,
+                "4_star": 0,
+                "3_star": 0,
+                "2_star": 0,
+                "1_star": 0
+            }),
             "updated_at": updated_user.get("updated_at")
         }
         
@@ -164,6 +184,7 @@ def upload_photo():
         
     except Exception as e:
         return jsonify({"error": f"Photo upload failed: {str(e)}"}), 500
+
 @profile_bp.route("/<user_id>", methods=["GET"])
 def get_user_profile(user_id):
     """Get any user's public profile (for displaying names/photos in app)"""
@@ -179,6 +200,16 @@ def get_user_profile(user_id):
             "role": user.get("role", ""),
             "bio": user.get("bio", ""),
             "profileImage": user.get("profileImage", ""),
+            # ← ADD RATING FIELDS (for displaying on gigs/profile cards)
+            "average_rating": user.get("average_rating", 0),
+            "total_reviews": user.get("total_reviews", 0),
+            "rating_breakdown": user.get("rating_breakdown", {
+                "5_star": 0,
+                "4_star": 0,
+                "3_star": 0,
+                "2_star": 0,
+                "1_star": 0
+            })
         }
         
         return jsonify({
